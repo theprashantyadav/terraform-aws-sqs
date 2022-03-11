@@ -1,12 +1,12 @@
 # Module      : SQS
 # Description : Terraform SQS module outputs.
 output "id" {
-  value       = join("", aws_sqs_queue.default.*.id)
+  value       = join("", aws_sqs_queue.test.*.id)
   description = "The URL for the created Amazon SQS queue."
 }
 
 output "arn" {
-  value       = join("", aws_sqs_queue.default.*.arn)
+  value       = join("", aws_sqs_queue.test.*.arn)
   description = "The ARN of the SQS queue."
 }
 

@@ -124,3 +124,40 @@ variable "kms_data_key_reuse_period_seconds" {
   default     = 300
   description = "The length of time, in seconds, for which Amazon SQS can reuse a data key to encrypt or decrypt messages before calling AWS KMS again. An integer representing seconds, between 60 seconds (1 minute) and 86,400 seconds (24 hours)."
 }
+
+variable "role_arn" {
+  type        = string
+  default     = ""
+  description = "Enter an EC2 Instance Role allowed to talk with the SQS queue."
+}
+
+variable "enable_sqs_queue_policy" {
+  type        = bool
+  default     = false
+   description = "Set to true to create a queue policy. Requires role_arn. Allowed values: true, false"
+}
+
+
+variable "internal_record_name" {
+  type        = string
+  default     = ""
+  description = "Record Name for the new Resource Record in the Internal Hosted Zone. i.e. myqueue."
+}
+
+
+variable "internal_zone_name" {
+  type        = string
+  default     = ""
+  description = "TLD for Internal Hosted Zone. i.e. dev.example.com"
+}
+
+variable "route_53_hosted_zone_id" {
+  type        = string
+  default     = ""
+   description = "The Route53 Internal Hosted Zone ID."
+}
+
+
+variable "queue_url" {
+  type   = string
+}

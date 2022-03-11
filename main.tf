@@ -20,7 +20,7 @@ module "labels" {
 
 # Module      : SQS
 # Description : Terraform module to create SQS resource on AWS for managing queue.
-resource "aws_sqs_queue" "default" {
+resource "aws_sqs_queue" "test" {
   count = var.enabled ? 1 : 0
 
   name                              = var.fifo_queue ? format("%s.fifo", module.labels.id) : module.labels.id
@@ -36,4 +36,37 @@ resource "aws_sqs_queue" "default" {
   kms_master_key_id                 = var.kms_master_key_id
   kms_data_key_reuse_period_seconds = var.kms_data_key_reuse_period_seconds
   tags                              = module.labels.tags
+}
+
+
+
+resource "aws_sqs_queue_policy" "sqs_policy" {
+  count = var.enable_sqs_queue_policy ? 1 : 0
+
+  queue_url = var.queue_url
+
+  policy = <<POLICY
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": [
+        "sqs:SendMessage",
+        "sqs:ReceiveMessage",
+        "sqs:DeleteMessage"
+      ],
+      "Resource": [
+       #
+      ],
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": [
+          "${var.role_arn}"
+        ]
+      }
+    }
+  ]
+}
+POLICY
+
 }
